@@ -8,8 +8,12 @@ import * as Dialog from "@radix-ui/react-dialog";
 interface EditRadioModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (updatedRadio: { name: string; country: string }) => void;
-  radio: { name: string; country: string };
+  onSave: (updatedRadio: {
+    name: string;
+    country: string;
+    url: string;
+  }) => void;
+  radio: { name: string; country: string; url: string };
 }
 
 const EditRadioModal = ({
@@ -20,9 +24,10 @@ const EditRadioModal = ({
 }: EditRadioModalProps) => {
   const [name, setName] = useState(radio.name);
   const [country, setCountry] = useState(radio.country);
+  const [url, setUrl] = useState(radio.url);
 
   const handleSave = () => {
-    onSave({ name, country });
+    onSave({ name, country, url });
     onClose();
   };
 
@@ -37,23 +42,25 @@ const EditRadioModal = ({
 
           <div className="space-y-4 mt-4">
             <Input
-              className="bg-gray-800 border border-gray-700 text-white rounded-md p-2 w-full"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Nome da Rádio"
             />
             <Input
-              className="bg-gray-800 border border-gray-700 text-white rounded-md p-2 w-full"
               value={country}
               onChange={(e) => setCountry(e.target.value)}
               placeholder="País"
+            />
+            <Input
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              placeholder="URL do Stream"
             />
           </div>
 
           <div className="flex justify-end space-x-2 mt-4">
             <Button
               onClick={onClose}
-              variant="outline"
               className="bg-gray-700 text-gray-300 hover:bg-gray-600 px-4 py-2 rounded-md"
             >
               Cancelar
