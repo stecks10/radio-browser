@@ -49,7 +49,7 @@ const Menu = ({ categories, favorites, toggleFavorite }: MenuProps) => {
                 {favorites.includes(category) && (
                   <Check
                     size={26}
-                    className="text-green-500 border-2 border-white p-1 rounded"
+                    className="text-green-500 border-2 border-zinc-600 p-1 rounded"
                   />
                 )}
               </div>

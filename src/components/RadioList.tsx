@@ -3,7 +3,7 @@
 import RadioItem from "./RadioItem";
 
 interface RadioListProps {
-  radios: { name: string; description: string }[];
+  radios: { name: string; description: string; country: string }[];
 }
 
 const RadioList = ({ radios }: RadioListProps) => {
@@ -14,6 +14,7 @@ const RadioList = ({ radios }: RadioListProps) => {
           key={index}
           name={radio.name}
           description={radio.description}
+          country={radio.country}
         />
       ))}
     </div>
