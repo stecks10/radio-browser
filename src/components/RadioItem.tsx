@@ -7,9 +7,18 @@ interface RadioItemProps {
   name: string;
   description: string;
   country: string;
+  onRemoveFavorite: () => void;
 }
 
-const RadioItem = ({ name, description, country }: RadioItemProps) => {
+const RadioItem = ({
+  name,
+  description,
+  country,
+  onRemoveFavorite,
+}: RadioItemProps) => {
+  const handleRemoveFavorite = () => {
+    onRemoveFavorite();
+  };
   return (
     <div className="flex justify-between items-center p-4 bg-gray-800 rounded-md">
       <div>
@@ -24,7 +33,10 @@ const RadioItem = ({ name, description, country }: RadioItemProps) => {
         <Button className="p-2 rounded-full bg-gray-700 text-gray-400">
           <Pen />
         </Button>
-        <Button className="p-2 rounded-full bg-gray-700 text-gray-400">
+        <Button
+          className="p-2 rounded-full bg-gray-700 text-gray-400"
+          onClick={handleRemoveFavorite}
+        >
           <Trash />
         </Button>
       </div>

@@ -40,11 +40,16 @@ export default function Home() {
 
   const displayedRadios =
     favorites.length > 0
-      ? radios.filter(
-          (radio: Radio) =>
-            favorites.includes(radio.name.trim()) &&
-            radio.name.toLowerCase().includes(searchQuery.toLowerCase())
-        )
+      ? radios
+          .filter(
+            (radio: Radio) =>
+              favorites.includes(radio.name.trim()) &&
+              radio.name.toLowerCase().includes(searchQuery.toLowerCase())
+          )
+          .map((radio: Radio) => ({
+            ...radio,
+            onRemoveFavorite: () => toggleFavorite(radio.name.trim()),
+          }))
       : [];
 
   return (

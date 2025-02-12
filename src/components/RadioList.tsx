@@ -3,7 +3,12 @@
 import RadioItem from "./RadioItem";
 
 interface RadioListProps {
-  radios: { name: string; description: string; country: string }[];
+  radios: {
+    name: string;
+    description: string;
+    country: string;
+    onRemoveFavorite: () => void;
+  }[];
 }
 
 const RadioList = ({ radios }: RadioListProps) => {
@@ -15,6 +20,7 @@ const RadioList = ({ radios }: RadioListProps) => {
           name={radio.name}
           description={radio.description}
           country={radio.country}
+          onRemoveFavorite={radio.onRemoveFavorite}
         />
       ))}
     </div>
