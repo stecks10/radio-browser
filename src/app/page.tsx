@@ -9,32 +9,23 @@ import { useRadios } from "@/hooks/useRadios";
 
 const queryClient = new QueryClient();
 
+interface Radio {
+  stationuuid: string;
+  name: string;
+}
+
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
-
-  const categories = [
-    "MPB",
-    "Sertanejo Brasil",
-    "Rádio FM",
-    "Radio Sertanejo Só Modão",
-    "Bossa Nova Brasil",
-    "Gaúcha",
-    "Rádio Jovem Pan",
-    "Novo Tempo",
-  ];
 
   const { data: radios, isLoading, error } = useRadios();
 
   if (isLoading)
-    return <div className="text-white text-center">Loading radios...</div>;
+    return <div className="text-white text-center">Carregando rádios...</div>;
 
   if (error instanceof Error)
-    return <div className="text-white text-center">Error: {error.message}</div>;
+    return <div className="text-white text-center">Erro: {error.message}</div>;
 
-  interface Radio {
-    id: string;
-    name: string;
-  }
+  const categories: string[] = radios.map((radio: Radio) => radio.name.trim());
 
   const filteredRadios = radios.filter((radio: Radio) =>
     radio.name.toLowerCase().includes(searchQuery.toLowerCase())
