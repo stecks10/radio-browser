@@ -5,9 +5,11 @@ import { useState } from "react";
 
 interface MenuProps {
   categories: string[];
+  favorites: string[];
+  toggleFavorite: (category: string) => void;
 }
 
-const Menu = ({ categories }: MenuProps) => {
+const Menu = ({ categories, favorites, toggleFavorite }: MenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -33,10 +35,24 @@ const Menu = ({ categories }: MenuProps) => {
           {categories.map((category) => (
             <li
               key={category}
-              className="cursor-pointer hover:bg-gray-700 p-2 rounded-md text-white flex items-center gap-2"
+              className="cursor-pointer hover:bg-gray-700 p-2 rounded-md text-white flex items-center justify-between"
             >
-              {category}
-              <Check className="" size={16} />
+              <div
+                className="ml-1 cursor-pointer flex items-center"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleFavorite(category);
+                }}
+              >
+                <span className="mr-2">{category}</span>
+
+                {favorites.includes(category) && (
+                  <Check
+                    size={26}
+                    className="text-green-500 border-2 border-white p-1 rounded"
+                  />
+                )}
+              </div>
             </li>
           ))}
         </ul>

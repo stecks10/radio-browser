@@ -1,3 +1,5 @@
+"use client";
+
 import RadioItem from "./RadioItem";
 
 interface RadioListProps {

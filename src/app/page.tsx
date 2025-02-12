@@ -16,6 +16,7 @@ interface Radio {
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [favorites, setFavorites] = useState<string[]>([]);
 
   const { data: radios, isLoading, error } = useRadios();
 
@@ -27,14 +28,33 @@ export default function Home() {
 
   const categories: string[] = radios.map((radio: Radio) => radio.name.trim());
 
-  const filteredRadios = radios.filter((radio: Radio) =>
-    radio.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const toggleFavorite = (radioName: string) => {
+    setFavorites((prev) => {
+      if (prev.includes(radioName)) {
+        return prev.filter((name) => name !== radioName);
+      } else {
+        return [...prev, radioName];
+      }
+    });
+  };
+
+  const displayedRadios =
+    favorites.length > 0
+      ? radios.filter(
+          (radio: Radio) =>
+            favorites.includes(radio.name.trim()) &&
+            radio.name.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      : [];
 
   return (
     <QueryClientProvider client={queryClient}>
       <div className="bg-gray-900 text-white min-h-screen flex">
-        <Menu categories={categories} />
+        <Menu
+          categories={categories}
+          favorites={favorites}
+          toggleFavorite={toggleFavorite}
+        />
 
         <main className="flex-1 p-6">
           <h1 className="text-3xl font-bold mb-6 text-center">Radio Browser</h1>
@@ -46,7 +66,11 @@ export default function Home() {
 
           <section>
             <h2 className="text-xl mb-4 text-center">Favorite Radios</h2>
-            <RadioList radios={filteredRadios} />
+            {displayedRadios.length === 0 ? (
+              <p className="text-center">Nenhum favorito selecionado.</p>
+            ) : (
+              <RadioList radios={displayedRadios} />
+            )}
           </section>
         </main>
       </div>
