@@ -2,7 +2,7 @@
 
 import RadioList from "@/components/RadioList";
 import SearchBar from "@/components/SearchBar";
-import Sidebar from "@/components/Sidebar";
+import Menu from "@/components/Menu";
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useRadios } from "@/hooks/useRadios";
@@ -43,7 +43,7 @@ export default function Home() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="bg-gray-900 text-white min-h-screen flex">
-        <Sidebar categories={categories} />
+        <Menu categories={categories} />
 
         <main className="flex-1 p-6">
           <h1 className="text-3xl font-bold mb-6 text-center">Radio Browser</h1>

@@ -1,30 +1,30 @@
 "use client";
 
-import { Menu } from "lucide-react";
+import { Check, Menu as IconMenu } from "lucide-react";
 import { useState } from "react";
 
-interface SidebarProps {
+interface MenuProps {
   categories: string[];
 }
 
-const Sidebar = ({ categories }: SidebarProps) => {
+const Menu = ({ categories }: MenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleSidebar = () => {
+  const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   return (
     <>
       <button
-        onClick={toggleSidebar}
-        className="fixed lg:hidden top-4 left-4 p-2 bg-gray-800 text-white rounded-md z-50"
+        onClick={toggleMenu}
+        className="fixed top-4 left-4 p-2 bg-gray-800 text-white rounded-md z-50 lg:hidden"
       >
-        <Menu />
+        <IconMenu size={24} />
       </button>
 
       <aside
-        className={`fixed lg:relative lg:translate-x-0 transform ${
+        className={`fixed lg:relative transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0 transition-transform duration-200 ease-in-out w-64 bg-gray-800 p-4 space-y-4 h-screen z-40`}
       >
@@ -33,9 +33,10 @@ const Sidebar = ({ categories }: SidebarProps) => {
           {categories.map((category) => (
             <li
               key={category}
-              className="cursor-pointer hover:bg-gray-700 p-2 rounded-md text-white"
+              className="cursor-pointer hover:bg-gray-700 p-2 rounded-md text-white flex items-center gap-2"
             >
               {category}
+              <Check className="" size={16} />
             </li>
           ))}
         </ul>
@@ -43,7 +44,7 @@ const Sidebar = ({ categories }: SidebarProps) => {
 
       {isOpen && (
         <div
-          onClick={toggleSidebar}
+          onClick={toggleMenu}
           className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
         ></div>
       )}
@@ -51,4 +52,4 @@ const Sidebar = ({ categories }: SidebarProps) => {
   );
 };
 
-export default Sidebar;
+export default Menu;
