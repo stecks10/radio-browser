@@ -26,6 +26,9 @@ const RadioList = ({ radios }: RadioListProps) => {
       url: radio.url_resolved,
     }))
   );
+  const [playingRadioIndex, setPlayingRadioIndex] = useState<number | null>(
+    null
+  );
 
   useEffect(() => {
     setRadioList(
@@ -45,6 +48,18 @@ const RadioList = ({ radios }: RadioListProps) => {
     setRadioList(newRadios);
   };
 
+  const handlePlayRadio = (index: number) => {
+    if (playingRadioIndex !== null && playingRadioIndex !== index) {
+      setPlayingRadioIndex(null);
+    }
+    setPlayingRadioIndex(index);
+  };
+
+  const handleFavoriteToggle = (index: number) => {
+    const updatedRadios = [...radioList];
+    setRadioList(updatedRadios);
+  };
+
   return (
     <div className="space-y-4">
       {radioList.map((radio, index) => (
@@ -52,7 +67,7 @@ const RadioList = ({ radios }: RadioListProps) => {
           key={index}
           name={radio.name}
           country={radio.country}
-          url={radio.url} // Agora sempre usamos 'url'
+          url={radio.url}
           onRemoveFavorite={radio.onRemoveFavorite}
           onUpdateRadio={(updatedRadio) =>
             handleUpdateRadio(index, {
@@ -60,6 +75,9 @@ const RadioList = ({ radios }: RadioListProps) => {
               onRemoveFavorite: radio.onRemoveFavorite,
             })
           }
+          isPlaying={playingRadioIndex === index}
+          onPlay={() => handlePlayRadio(index)}
+          isActive={playingRadioIndex === index}
         />
       ))}
     </div>
