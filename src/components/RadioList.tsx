@@ -60,6 +60,14 @@ const RadioList = ({ radios }: RadioListProps) => {
     setRadioList(updatedRadios);
   };
 
+  const handlePlayStateChange = (index: number, isPlaying: boolean) => {
+    if (isPlaying) {
+      setPlayingRadioIndex(index);
+    } else if (playingRadioIndex === index) {
+      setPlayingRadioIndex(null);
+    }
+  };
+
   return (
     <div className="space-y-4">
       {radioList.map((radio, index) => (
@@ -78,6 +86,9 @@ const RadioList = ({ radios }: RadioListProps) => {
           isPlaying={playingRadioIndex === index}
           onPlay={() => handlePlayRadio(index)}
           isActive={playingRadioIndex === index}
+          onPlayStateChange={(isPlaying) =>
+            handlePlayStateChange(index, isPlaying)
+          }
         />
       ))}
     </div>
